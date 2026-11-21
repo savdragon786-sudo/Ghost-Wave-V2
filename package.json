@@ -1,0 +1,11 @@
+{
+  "name": "ghostwave",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Ghostwave - send and receive links and photos through sound (ggwave). Created by Ayush Vaitage.",
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "appId": "com.ayushvaitage.ghostwave",
+  "appName": "Ghostwave",
+  "webDir": "www",
+  "backgroundColor": "#070A12",
+  "android": {
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}

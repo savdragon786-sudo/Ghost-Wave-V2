@@ -1,0 +1,40 @@
+{
+  "_help": "Edit this file on GitHub (pencil icon, then Commit changes). Every phone with Ghostwave picks it up the next time the app is opened. No new APK needed.",
+
+  "notice": {
+    "enabled": false,
+    "id": "notice-1",
+    "display": "popup",
+    "style": "info",
+    "title": "Hello from Ayush",
+    "message": "Write your message here. It will show once on every phone.",
+    "showOnce": true,
+    "dismissible": true,
+    "buttonText": "",
+    "buttonUrl": "",
+    "expires": ""
+  },
+
+  "update": {
+    "latestVersion": "1.2.0",
+    "minVersion": "1.0.0",
+    "force": false,
+    "message": "A new version of Ghostwave is ready.",
+    "url": ""
+  },
+
+  "maintenance": {
+    "enabled": false,
+    "message": "Ghostwave is being updated. Please try again in a little while."
+  },
+
+  "links": [
+    { "label": "Telegram Channel", "icon": "✈️", "url": "" }
+  ],
+
+  "about": {
+    "extraText": ""
+  },
+
+  "flags": {}
+}

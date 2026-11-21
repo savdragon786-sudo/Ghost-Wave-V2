@@ -618,6 +618,7 @@
     <p id="aboutExtra" style="white-space:pre-line"></p>
     <div class="linkrow" id="aboutLinks"></div>
     <p class="ver" id="aboutVersion"></p>
+    <p class="ver" id="aboutRemote"></p>
     <button class="btn" id="btnCloseAbout">Close</button>
   </div>
 </div>
@@ -1476,7 +1477,7 @@ $("btnShowPrev").addEventListener("click", () => { const u = $("btnShowPrev").da
    app shows the change the next time it is opened. The last good copy is
    saved on the phone so it still works offline.
    ===================================================================== */
-const APP_VERSION = "1.2.0";   // bump this (and package.json) when you build a new APK
+const APP_VERSION = "1.2.1";   // bump this (and package.json) when you build a new APK
 // Repo: savdragon786-sudo/Ghost-Wave (branch main). Change this link only if you move the repo.
 const REMOTE_CONFIG_URL = "https://raw.githubusercontent.com/savdragon786-sudo/Ghost-Wave/main/remote-config.json";
 const REMOTE_CACHE_KEY = "ghostwave.remote.v1";
@@ -1622,17 +1623,16 @@ function applyRemote(cfg, fromCache) {
 }
 
 async function fetchRemote() {
-  const ctl = ("AbortController" in window) ? new AbortController() : null;
-  const timer = setTimeout(() => { if (ctl) ctl.abort(); }, 8000);
-  try {
-    const r = await fetch(REMOTE_CONFIG_URL + "?t=" + Date.now(), { cache: "no-store", signal: ctl ? ctl.signal : undefined });
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    return await r.json();
-  } finally { clearTimeout(timer); }
+  const url = REMOTE_CONFIG_URL + "?t=" + Date.now();
+  const timeout = new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 10000));
+  const r = await Promise.race([fetch(url), timeout]);
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  try { return await r.json(); } catch (_) { throw new Error("file is not valid JSON"); }
 }
 
 function initRemote() {
   $("aboutVersion").textContent = "Version " + APP_VERSION;
+  $("aboutRemote").textContent = "Remote config: loading...";
   try {
     const cached = localStorage.getItem(REMOTE_CACHE_KEY);
     if (cached) applyRemote(JSON.parse(cached), true);
@@ -1640,8 +1640,12 @@ function initRemote() {
   fetchRemote().then(cfg => {
     try { localStorage.setItem(REMOTE_CACHE_KEY, JSON.stringify(cfg)); } catch (_) {}
     applyRemote(cfg, false);
+    $("aboutRemote").textContent = "Remote config: loaded";
     log("remote config loaded");
-  }).catch(() => log("offline: using saved remote config"));
+  }).catch(e => {
+    $("aboutRemote").textContent = "Remote config: failed (" + (e && e.message ? e.message : "network") + ")";
+    log("remote config failed: " + (e && e.message ? e.message : "network"), "err");
+  });
 }
 
 loadSettings();

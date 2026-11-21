@@ -2,12 +2,12 @@
   "_help": "Edit this file on GitHub (pencil icon, then Commit changes). Every phone with Ghostwave picks it up the next time the app is opened. No new APK needed.",
 
   "notice": {
-    "enabled": false,
+    "enabled": true,
     "id": "notice-1",
     "display": "popup",
     "style": "info",
-    "title": "Hello from Ayush",
-    "message": "Write your message here. It will show once on every phone.",
+    "title": "Note",
+    "message": "Ghostwave is currently in alpha stage. You may find bugs, and some features may change. Thanks for testing",
     "showOnce": true,
     "dismissible": true,
     "buttonText": "",
@@ -33,7 +33,7 @@
   ],
 
   "about": {
-    "extraText": ""
+    "extraText": "Ghostwave is currently in alpha stage. You may find bugs, and some features may change. Thanks for testing"
   },
 
   "flags": {}
